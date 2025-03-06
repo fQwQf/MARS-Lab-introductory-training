@@ -213,7 +213,7 @@ class TrainerGAN():
         
         # create dataset by the above function
         dataset = get_dataset(os.path.join(self.config["workspace_dir"], 'faces'))
-        self.dataloader = DataLoader(dataset, batch_size=self.config["batch_size"], shuffle=True, num_workers=2)
+        self.dataloader = DataLoader(dataset, batch_size=self.config["batch_size"], shuffle=True, num_workers=64)
         
         # model preparation
         self.G = self.G.cuda()
@@ -361,9 +361,9 @@ class TrainerGAN():
 
 config = {
     "model_type": "GAN",
-    "batch_size": 64,
+    "batch_size": 256,
     "lr": 1e-4,
-    "n_epoch": 1,
+    "n_epoch": 100,
     "n_critic": 1,
     "z_dim": 100,
     "workspace_dir": workspace_dir, # define in the environment setting
@@ -371,6 +371,3 @@ config = {
 
 trainer = TrainerGAN(config)
 trainer.train()
-
-# save the 1000 images into ./output folder
-trainer.inference(f'{workspace_dir}/checkpoints/2022-03-31_15-59-17_GAN/G_0.pth') # you have to modify the path when running this line
