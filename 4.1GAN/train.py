@@ -213,7 +213,7 @@ class TrainerGAN():
         
         # create dataset by the above function
         dataset = get_dataset(os.path.join(self.config["workspace_dir"], 'faces'))
-        self.dataloader = DataLoader(dataset, batch_size=self.config["batch_size"], shuffle=True, num_workers=64)
+        self.dataloader = DataLoader(dataset, batch_size=self.config["batch_size"], shuffle=True, pin_memory=True, num_workers=128)
         
         # model preparation
         self.G = self.G.cuda()
@@ -369,5 +369,6 @@ config = {
     "workspace_dir": workspace_dir, # define in the environment setting
 }
 
+torch.backends.cudnn.benchmark = True
 trainer = TrainerGAN(config)
 trainer.train()
