@@ -71,11 +71,11 @@ class My_Model(nn.Module):
         super(My_Model, self).__init__()
         # TODO: modify model's structure, be aware of dimensions. 
         self.layers = nn.Sequential(
-            nn.Linear(input_dim, 16),
+            nn.Linear(input_dim, 100),
             nn.ReLU(),
-            nn.Linear(16, 8),
+            nn.Linear(100, 50),
             nn.ReLU(),
-            nn.Linear(8, 1)
+            nn.Linear(50, 1)
         )
 
     def forward(self, x):
@@ -217,3 +217,4 @@ model = My_Model(input_dim=x_train.shape[1]).to(device)
 model.load_state_dict(torch.load(config['save_path']))
 preds = predict(test_loader, model, device) 
 save_pred(preds, 'pred.csv')         
+print(x_train.shape[1])
